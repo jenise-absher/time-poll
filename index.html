@@ -8,49 +8,208 @@
     :root {
       --primary: #0472AE;
       --text: #12242B;
-      --text-light: #F7FAFA;
+      --muted: #5B6B70;
       --page: #FBFCFC;
       --card: #FFFFFF;
       --border: #E3E9E9;
+      --gold: #DACC3E;
+      --gold-light: #F6F1C7;
     }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: var(--page);
       color: var(--text);
-    }
-    header {
-      background: var(--primary);
-      color: var(--text-light);
-      padding: 16px;
-    }
-    h1 {
-      margin: 0;
-      font-family: Calibri, Carlito, Arial, sans-serif;
-      font-size: 1.5rem;
+      line-height: 1.5;
     }
     main {
-      max-width: 560px;
-      margin: 24px auto;
+      max-width: 440px;
+      margin: 48px auto;
       padding: 0 16px;
     }
+    h1 {
+      margin: 0 0 4px;
+      font-family: Calibri, Carlito, Arial, sans-serif;
+      font-size: 1.75rem;
+    }
+    h2 { margin: 0 0 4px; font-size: 1.1rem; }
+    p { margin: 0 0 16px; }
+    .muted { color: var(--muted); }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 20px;
+      margin-bottom: 16px;
     }
+    button, .button {
+      font: inherit;
+      border-radius: 6px;
+      padding: 12px 16px;
+      cursor: pointer;
+      border: 1px solid var(--primary);
+      background: var(--primary);
+      color: #fff;
+      width: 100%;
+    }
+    button.secondary { background: #fff; color: var(--primary); }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    input[type="text"] {
+      font: inherit;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .or {
+      text-align: center;
+      color: var(--muted);
+      margin: 16px 0;
+    }
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .icon { width: 24px; height: 24px; flex: none; }
+    .step {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Your code: gold, striped, dashed edge, like a ticket */
+    .code-card {
+      background:
+        repeating-linear-gradient(135deg, transparent 0 10px, rgba(218, 204, 62, 0.18) 10px 20px),
+        var(--gold-light);
+      border: 2px dashed var(--text);
+    }
+    .code {
+      font-family: "Courier New", monospace;
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      text-align: center;
+      background: #fff;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .check { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+
+    /* Share link: plain white card */
+    .share-card.locked { opacity: 0.45; }
+    .link {
+      font-family: "Courier New", monospace;
+      font-size: 0.9rem;
+      word-break: break-all;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Find a Time</h1>
-  </header>
   <main>
-    <div class="card">
-      <p>Hello! This is the start of a little tool to help friends find a time to meet.</p>
-      <p>Coming soon: create a poll, share a link, see when everyone is free.</p>
-    </div>
+
+    <!-- Start screen -->
+    <section id="start">
+      <h1>Find a Time</h1>
+      <p class="muted">Find a time that works for a few friends.</p>
+
+      <div class="card">
+        <button id="new-poll">Create a new poll</button>
+        <p class="or">or</p>
+        <label for="code-input"><strong>Already made one?</strong> Enter your code</label>
+        <input id="code-input" type="text" placeholder="K7M-Q2X" maxlength="7" autocomplete="off">
+        <button class="secondary" id="open-poll">Open my poll</button>
+      </div>
+    </section>
+
+    <!-- Poll created (preview until saving works) -->
+    <section id="created" hidden>
+      <h1>Your poll is ready</h1>
+      <p class="muted">Two quick steps.</p>
+
+      <div class="card code-card">
+        <div class="step">Step 1 · Just for you</div>
+        <div class="title-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2"/><path d="m16 7 3 3"/><path d="m19 4 2 2"/>
+          </svg>
+          <h2>Save your private code</h2>
+        </div>
+        <p>You'll need this to see answers and pick a time. Don't share it.</p>
+        <div class="code" id="code">K7M-Q2X</div>
+        <button id="copy-code">Copy code</button>
+        <label class="check">
+          <input type="checkbox" id="saved"> I've saved my code somewhere safe
+        </label>
+      </div>
+
+      <div class="card share-card locked" id="share-card">
+        <div class="step">Step 2 · For your friends</div>
+        <div class="title-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/>
+          </svg>
+          <h2>Share this link</h2>
+        </div>
+        <p>Send it by text, email or chat. Up to 5 people.</p>
+        <div class="link">https://find-a-time.netlify.app/p/abc123</div>
+        <button id="copy-link" disabled>Copy share link</button>
+      </div>
+    </section>
+
   </main>
+  <script>
+    const start = document.getElementById('start');
+    const created = document.getElementById('created');
+    const saved = document.getElementById('saved');
+    const shareCard = document.getElementById('share-card');
+    const copyLink = document.getElementById('copy-link');
+
+    // For now "Create" jumps straight to the result screen. The create form comes in build step 3.
+    document.getElementById('new-poll').onclick = () => {
+      start.hidden = true;
+      created.hidden = false;
+    };
+
+    document.getElementById('open-poll').onclick = () => {
+      alert('Opening polls by code comes once saving works (build step 4).');
+    };
+
+    function copy(text, button, label) {
+      navigator.clipboard.writeText(text);
+      button.textContent = 'Copied!';
+      setTimeout(() => { button.textContent = label; }, 1500);
+    }
+
+    // Copying the code counts as saving it
+    document.getElementById('copy-code').onclick = (e) => {
+      copy(document.getElementById('code').textContent, e.target, 'Copy code');
+      saved.checked = true;
+      saved.onchange();
+    };
+
+    // The share link unlocks only once the code is saved
+    saved.onchange = () => {
+      shareCard.classList.toggle('locked', !saved.checked);
+      copyLink.disabled = !saved.checked;
+    };
+
+    copyLink.onclick = (e) => {
+      copy(document.querySelector('.link').textContent, e.target, 'Copy share link');
+    };
+  </script>
 </body>
 </html>

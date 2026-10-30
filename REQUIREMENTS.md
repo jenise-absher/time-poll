@@ -1,69 +1,46 @@
 # Find-a-Time: requirements
 
-A small, free website that helps a few friends find a meeting time that works for everyone.
-It's a learning project for GitHub and Netlify, not a business.
+A small, free site that helps a few friends find a time to meet.
+A learning project for GitHub and Netlify. No accounts, no emails, no cost.
 
-## The simple ask
+## How it works
 
-1. I create a poll: a title, a few days, and the hours to choose from.
-2. I get a link and send it to up to 5 people however I like (text, email, chat).
-3. Each person opens the link on their phone, types their name, and taps the times they're free.
-4. Everyone can see which times work for all, or for all but one.
-5. I pick the time and download a calendar file to share.
+1. **Start.** The first screen asks: create a new poll, or enter the code for one you already made.
+2. **Create.** Give it a title, pick a few days and the hours to choose from.
+3. **Save your code.** You get a short private code (like `K7M-Q2X`). You need it to come back. You can't move on until you copy it or tick "I've saved it."
+4. **Share.** Then you get a link for your friends (up to 5). Send it however you like.
+5. **Answer.** Friends open the link, type a name, and tap the times they're free.
+6. **Pick.** Enter your code on the start screen to see the results and choose a time. Download a calendar file to share.
 
-No accounts, no emails sent by the site, no cost.
+Polls are deleted after 30 days.
 
-## What it does
+## Keeping the code and the link apart
 
-| # | Feature | Notes |
-|---|---------|-------|
-| 1 | Create a poll | Title, meeting length (30, 45 or 60 min), up to 14 days, start and end hour |
-| 2 | Two links | A **share link** for friends and a private **organizer link** for me. Shown once, with a Copy button |
-| 3 | Respond | Name plus a tap-to-select grid of time slots. Works on a phone |
-| 4 | Up to 5 people | A poll accepts up to 5 responses. The 6th person sees "This poll is full" |
-| 5 | Edit my answer | A person can come back on the same device and change their times |
-| 6 | Results | Each slot shows how many people are free and who. Times that work for everyone stand out |
-| 7 | Pick a time | From the organizer link: choose a slot, add an optional meeting link or phone number, download an `.ics` calendar file |
-| 8 | Auto-cleanup | Polls are deleted 30 days after they're created |
+The code is yours. The link is for friends. They should never be mixed up.
 
-## Not doing (on purpose)
+| | Your code | Share link |
+|---|---|---|
+| Who it's for | Only you | Your friends |
+| Icon | Key | Paper plane |
+| Look | Gold, striped, dashed edge, like a ticket | Plain white card |
+| When | Step 1, on its own | Step 2, after the code is saved |
 
-- Accounts, passwords or logins
-- Sending emails or texts
-- Reminders, rescheduling or calendar sync
-- Student names or anything sensitive. The create page says: "Don't put private details in the title."
+## Look and feel
 
-## Rules of thumb
+- Calm and plain: no colored header bars, lots of white space.
+- Works on a phone.
+- Show times in each person's own time zone.
 
-- **Phone first.** Every page has to work on a small screen.
-- **Time zones.** Store times in UTC and show them in each person's local time, with the zone name on screen.
-- **Not color alone.** The results grid shows a number in each slot, not just shading.
-- **Brand.** Use the Propoint palette: Primary Shade 1 `#0472AE` for buttons, tints `#50B0E4` and `#9BD2F0` for the results shading, Golden Glow `#DACC3E` with dark text `#12242B` for "everyone's free."
+## Not doing
 
-## How it's built
+Logins, sending emails or texts, reminders, calendar sync, anything private in the title.
 
-| Piece | Choice | Why |
-|-------|--------|-----|
-| Code | Plain HTML, CSS and JavaScript | Nothing to install or learn beyond the basics |
-| Code home | A GitHub repository | Learn commits, pushes and history |
-| Hosting | Netlify, connected to the GitHub repo | Every push publishes the site automatically |
-| Saving polls | Netlify Functions plus Netlify Blobs | Built into Netlify, so no extra service or account |
-| Cost | Netlify free plan | Plenty for a few friends |
+## Build steps
 
-## Build steps (each one is a small win)
-
-1. Make a GitHub repo and put a "Hello" page in it.
-2. Connect the repo to Netlify and see the page live.
-3. Build the create-poll page (it only shows in the browser for now).
-4. Add a Netlify Function that saves the poll and returns the two links.
-5. Build the response page and save responses.
-6. Build the results grid.
-7. Add Pick a time and the `.ics` download.
-8. Add the 5-person limit and 30-day cleanup.
-9. Send it to a friend.
-
-## Open questions
-
-- Is "5" the number of people answering, or does it include me?
-- Should friends see each other's names in the results, or only the organizer?
-- What should it be called?
+1. ~~Hello page on GitHub.~~
+2. Connect to Netlify.
+3. Start screen and create-poll page.
+4. Save polls with a Netlify Function and Blobs. Return the code and the link.
+5. Answer page.
+6. Results and pick a time.
+7. 5-person limit and 30-day cleanup.
